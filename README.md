@@ -3,8 +3,8 @@
 # Web Server Documentation
 
 Group: As defined by Canvas
-Author1: Ekarat Buddharuksa
-Author2: Austin Kuykendall
+Author1: Ekarat Buddharuksa (benztimm)
+Author2: Austin Kuykendall (austinlikesfood)
 
 ## Results and Conclusions
 

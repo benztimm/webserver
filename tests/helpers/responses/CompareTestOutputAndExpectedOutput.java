@@ -9,6 +9,7 @@ public class CompareTestOutputAndExpectedOutput {
   private byte[] responseBody;
 
   public CompareTestOutputAndExpectedOutput(TestOutputStream output) {
+    this.responseHead = output.toString().getBytes();
     this.responseBody = output.getBody();
   }
 

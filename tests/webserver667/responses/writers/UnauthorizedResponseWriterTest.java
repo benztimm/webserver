@@ -26,6 +26,7 @@ public class UnauthorizedResponseWriterTest {
 
     HttpRequest request = new HttpRequest();
     request.setHttpMethod(HttpMethods.GET);
+    request.setVersion("HTTP/1.1");
 
     ResponseWriter writer = new UnauthorizedResponseWriter(out, testResource, request);
     writer.write();

@@ -30,7 +30,8 @@ public class ScriptResponseWriterTest {
     TestOutputStream out = new TestOutputStream();
 
     HttpRequest request = new HttpRequest();
-    request.setHttpMethod(HttpMethods.GET);
+    request.setHttpMethod(HttpMethods.POST);
+    request.setVersion("HTTP/1.1");
 
     ResponseWriter writer = new ScriptResponseWriter(out, resource, request);
     writer.write();

@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 
 import startup.configuration.MimeTypes;
+import webserver667.requests.HttpMethods;
+import webserver667.requests.HttpRequest;
 import webserver667.responses.IResource;
 import webserver667.responses.Resource;
 
@@ -32,16 +34,24 @@ public class ResourceTest {
     return documentRoot;
   }
 
+  private static HttpRequest testRequest = new HttpRequest();
+  static {
+    testRequest.setUri("/doesnt/matter/index.html");
+  }
+
   @Test
   public void testExistsForExistingFile() throws IOException {
     Path resourcePath = Paths.get("doesnt", "matter");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    Path temporaryFile = Files.createTempFile(
+    Path tempFile = Files.createTempFile(
         Paths.get(documentRoot.toString(), resourcePath.toString()), "index", ".html");
+
+    String name = tempFile.toFile().getName();
+    testRequest.setUri(Paths.get("doesnt", "matter", name).toString());
+
     IResource resource = new Resource(
-        String.format("/doesnt/matter/%s", temporaryFile.getFileName()),
-        null,
+        testRequest,
         documentRoot.toString(),
         getMimeTypes());
 
@@ -53,7 +63,7 @@ public class ResourceTest {
     Path resourcePath = Paths.get("doesnt", "matter");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    IResource resource = new Resource("/doesnt/matter/index.html", null, documentRoot.toString(), getMimeTypes());
+    IResource resource = new Resource(testRequest, documentRoot.toString(), getMimeTypes());
 
     assertFalse(resource.exists());
   }
@@ -63,7 +73,7 @@ public class ResourceTest {
     Path resourcePath = Paths.get("doesnt", "matter", "index.html");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    IResource resource = new Resource("/doesnt/matter/index.html", null, documentRoot.toString(), getMimeTypes());
+    IResource resource = new Resource(testRequest, documentRoot.toString(), getMimeTypes());
     Path expectedPath = Paths.get(documentRoot.toString(), resourcePath.toString());
 
     assertEquals(expectedPath, resource.getPath());
@@ -74,7 +84,7 @@ public class ResourceTest {
     Path resourcePath = Paths.get("doesnt", "matter");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    IResource resource = new Resource("/doesnt/matter/index.html", null, documentRoot.toString(), getMimeTypes());
+    IResource resource = new Resource(testRequest, documentRoot.toString(), getMimeTypes());
 
     File passwords = new File(
         Paths.get(documentRoot.toString(), resourcePath.toString(), ".passwords").toAbsolutePath().toString());
@@ -92,7 +102,7 @@ public class ResourceTest {
     Path resourcePath = Paths.get("doesnt", "matter");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    IResource resource = new Resource("/doesnt/matter/index.html", null, documentRoot.toString(), getMimeTypes());
+    IResource resource = new Resource(testRequest, documentRoot.toString(), getMimeTypes());
 
     assertFalse(resource.isProtected());
   }
@@ -102,7 +112,11 @@ public class ResourceTest {
     Path resourcePath = Paths.get("doesnt", "scripts");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    IResource resource = new Resource("/doesnt/scripts/index.html", null, documentRoot.toString(), getMimeTypes());
+    HttpRequest request = new HttpRequest();
+    request.setUri(Paths.get("doesnt", "scripts", "index.html").toString().replace("\\", "/"));
+    request.setHttpMethod(HttpMethods.POST);
+
+    IResource resource = new Resource(request, documentRoot.toString(), getMimeTypes());
 
     assertTrue(resource.isScript());
   }
@@ -112,7 +126,7 @@ public class ResourceTest {
     Path resourcePath = Paths.get("doesnt", "matter");
     Path documentRoot = createDocumentRoot(resourcePath);
 
-    IResource resource = new Resource("/doesnt/matter/index.html", null, documentRoot.toString(), getMimeTypes());
+    IResource resource = new Resource(testRequest, documentRoot.toString(), getMimeTypes());
 
     assertFalse(resource.isScript());
   }

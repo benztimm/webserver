@@ -24,7 +24,11 @@ public class OkResponseWriterTest {
         TestResource.createTempResourceFile("fileContent", "fileContent", fileContent));
     TestOutputStream out = new TestOutputStream();
 
-    ResponseWriter writer = new OkResponseWriter(out, testResource, new HttpRequest());
+    HttpRequest request = new HttpRequest();
+    request.setVersion("HTTP/1.1");
+    request.setUri("/fileContent");
+
+    ResponseWriter writer = new OkResponseWriter(out, testResource, request);
     writer.write();
 
     CompareTestOutputAndExpectedOutput comparator = new CompareTestOutputAndExpectedOutput(out);

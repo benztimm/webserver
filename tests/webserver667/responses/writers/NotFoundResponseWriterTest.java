@@ -22,7 +22,10 @@ public class NotFoundResponseWriterTest {
 
     TestOutputStream out = new TestOutputStream();
 
-    ResponseWriter writer = new NotFoundResponseWriter(out, testResource, new HttpRequest());
+    HttpRequest request = new HttpRequest();
+    request.setVersion("HTTP/1.1");
+
+    ResponseWriter writer = new NotFoundResponseWriter(out, testResource, request);
     writer.write();
 
     CompareTestOutputAndExpectedOutput comparator = new CompareTestOutputAndExpectedOutput(out);

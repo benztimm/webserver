@@ -8,17 +8,18 @@ import java.nio.file.Paths;
 import startup.configuration.MimeTypes;
 import webserver667.requests.HttpRequest;
 import webserver667.responses.authentication.UserAuthenticator;
+import webserver667.responses.authentication.UserPasswordAuthenticator;
 
 public class Resource implements IResource {
   private Path path;
   private MimeTypes mimeTypes;
   private String uri;
 
-  public Resource(String uri, String queryString, String documentRoot, MimeTypes mimeTypes) {
-    
+
+  public Resource(HttpRequest request, String documentRoot, MimeTypes mimeTypes) {    
     this.mimeTypes = mimeTypes;
-    this.path = Paths.get(documentRoot.toString(), uri.toString()).normalize();
-    this.uri = uri;
+    this.uri = request.getUri();
+    this.path = Paths.get(documentRoot.toString(), this.uri.toString()).normalize();
   }
 
   @Override
@@ -38,12 +39,13 @@ public class Resource implements IResource {
 
   @Override
   public boolean isScript() {
+    System.out.println("URI: " + this.uri);
     return this.uri.contains("/scripts/");
   }
 
   @Override
   public UserAuthenticator getUserAuthenticator(HttpRequest request) {
-    throw new UnsupportedOperationException("Unimplemented method 'getUserAuthenticator'");
+    return new UserPasswordAuthenticator(request, this);
   }
 
   @Override

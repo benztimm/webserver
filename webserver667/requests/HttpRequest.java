@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class HttpRequest {
   private HttpMethods httpMethod;
-  private String uri;
+  private String uri = "";
   private String queryString;
   private String version;
   private Map<String, String> headers = new HashMap<>();
@@ -48,6 +48,11 @@ public class HttpRequest {
   public String getHeader(String expectedHeaderName) {
     return this.headers.get(expectedHeaderName);
   }
+
+  public Map<String, String> getHeaders() {
+    return this.headers;
+  }
+
 
   public void addHeader(String headerLine) {
     String[] headerParts = headerLine.split(":", 2);

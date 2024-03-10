@@ -24,7 +24,6 @@ public class ForbiddenResponseWriter extends ResponseWriter {
     responseBuilder.append(
         String.format("%s %d %s\r\n", this.request.getVersion(), forbiHttpResponse.getCode(), forbiHttpResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
-    System.out.println(response);
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();

@@ -25,7 +25,6 @@ public class UnauthorizedResponseWriter extends ResponseWriter {
         String.format("%s %d %s\r\n", this.request.getVersion(), unAuthResponse.getCode(), unAuthResponse.getReasonPhrase()));
     responseBuilder.append("WWW-Authenticate: Basic realm=\"667 Server\"\r\n");
     String response = responseBuilder.toString();
-    System.out.println(response);
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();

@@ -23,7 +23,6 @@ public class NotFoundResponseWriter extends ResponseWriter {
     responseBuilder.append(
         String.format("%s %d %s\r\n", this.request.getVersion(), notFoundResponse.getCode(), notFoundResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
-    System.out.println(response);
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();

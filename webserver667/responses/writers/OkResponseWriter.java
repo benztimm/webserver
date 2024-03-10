@@ -35,8 +35,6 @@ public class OkResponseWriter extends ResponseWriter {
       responseBuilder.append(String.format("Content-Type: %s\r\n", this.resource.getMimeType()));
       responseBuilder.append(String.format("Content-Length: %d\r\n", this.resource.getFileSize()));
       responseBuilder.append("\r\n"); 
-      String contentString = new String(this.resource.getFileBytes(), StandardCharsets.UTF_8);
-      responseBuilder.append(contentString);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -44,6 +42,7 @@ public class OkResponseWriter extends ResponseWriter {
     String response = responseBuilder.toString();
     try {
       this.outStream.write(response.getBytes());
+      this.outStream.write(this.resource.getFileBytes());
       this.outStream.flush();
     } catch (IOException e) {
       e.printStackTrace();

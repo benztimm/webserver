@@ -25,12 +25,7 @@ public class BadRequestResponseWriter extends ResponseWriter {
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
         String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
-    
-        responseBuilder.append("Content-Type: text/html; charset=UTF-8\r\n");
-        responseBuilder.append("\r\n");
-        responseBuilder.append("<html><body><h1>400 Bad Request</h1><p>Your browser sent a request that this server could not understand.</p></body></html>");
     String response = responseBuilder.toString();
-    System.out.println(response);
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();

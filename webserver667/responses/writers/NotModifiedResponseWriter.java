@@ -23,7 +23,6 @@ public class NotModifiedResponseWriter extends ResponseWriter {
     responseBuilder.append(
         String.format("%s %d %s\r\n", this.request.getVersion(), notModifyResponse.getCode(), notModifyResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
-    System.out.println(response);
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();

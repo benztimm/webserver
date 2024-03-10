@@ -24,7 +24,6 @@ public class InternalServerErrorResponseWriter extends ResponseWriter {
     responseBuilder.append(
         String.format("%s %d %s\r\n", this.request.getVersion(), internalSeverErrResponseCode.getCode(), internalSeverErrResponseCode.getReasonPhrase()));
     String response = responseBuilder.toString();
-    System.out.println(response);
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();

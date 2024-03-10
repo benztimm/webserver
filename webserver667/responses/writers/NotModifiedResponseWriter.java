@@ -17,11 +17,11 @@ public class NotModifiedResponseWriter extends ResponseWriter {
 
   @Override
   public void write() {
-    HttpResponseCode badRequest = HttpResponseCode.NOT_MODIFIED;
+    HttpResponseCode notModifyResponse = HttpResponseCode.NOT_MODIFIED;
     this.request.getVersion();
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
-        String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
+        String.format("%s %d %s\r\n", this.request.getVersion(), notModifyResponse.getCode(), notModifyResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
     System.out.println(response);
     try {

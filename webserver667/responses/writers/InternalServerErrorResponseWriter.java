@@ -18,11 +18,11 @@ public class InternalServerErrorResponseWriter extends ResponseWriter {
 
   @Override
   public void write() {
-    HttpResponseCode badRequest = HttpResponseCode.INTERNAL_SERVER_ERROR;
+    HttpResponseCode internalSeverErrResponseCode = HttpResponseCode.INTERNAL_SERVER_ERROR;
     this.request.getVersion();
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
-        String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
+        String.format("%s %d %s\r\n", this.request.getVersion(), internalSeverErrResponseCode.getCode(), internalSeverErrResponseCode.getReasonPhrase()));
     String response = responseBuilder.toString();
     System.out.println(response);
     try {

@@ -17,11 +17,11 @@ public class NotFoundResponseWriter extends ResponseWriter {
 
   @Override
   public void write() {
-    HttpResponseCode badRequest = HttpResponseCode.NOT_FOUND;
+    HttpResponseCode notFoundResponse = HttpResponseCode.NOT_FOUND;
     this.request.getVersion();
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
-        String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
+        String.format("%s %d %s\r\n", this.request.getVersion(), notFoundResponse.getCode(), notFoundResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
     System.out.println(response);
     try {

@@ -18,11 +18,11 @@ public class MethodNotAllowedResponseWriter extends ResponseWriter {
 
   @Override
   public void write() {
-    HttpResponseCode badRequest = HttpResponseCode.METHOD_NOT_ALLOWED;
+    HttpResponseCode methodNotAllowResponse = HttpResponseCode.METHOD_NOT_ALLOWED;
     this.request.getVersion();
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
-        String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
+        String.format("%s %d %s\r\n", this.request.getVersion(), methodNotAllowResponse.getCode(), methodNotAllowResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
     System.out.println(response);
     try {

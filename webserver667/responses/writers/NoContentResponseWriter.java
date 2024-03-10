@@ -18,11 +18,11 @@ public class NoContentResponseWriter extends ResponseWriter {
 
   @Override
   public void write() {
-    HttpResponseCode badRequest = HttpResponseCode.NO_CONTENT;
+    HttpResponseCode noContentResponse = HttpResponseCode.NO_CONTENT;
     this.request.getVersion();
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
-        String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
+        String.format("%s %d %s\r\n", this.request.getVersion(), noContentResponse.getCode(), noContentResponse.getReasonPhrase()));
     String response = responseBuilder.toString();
     System.out.println(response);
     try {

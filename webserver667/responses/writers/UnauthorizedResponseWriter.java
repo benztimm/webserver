@@ -18,11 +18,11 @@ public class UnauthorizedResponseWriter extends ResponseWriter {
 
   @Override
   public void write() {
-    HttpResponseCode badRequest = HttpResponseCode.UNAUTHORIZED;
+    HttpResponseCode unAuthResponse = HttpResponseCode.UNAUTHORIZED;
     this.request.getVersion();
     StringBuilder responseBuilder = new StringBuilder();
     responseBuilder.append(
-        String.format("%s %d %s\r\n", this.request.getVersion(), badRequest.getCode(), badRequest.getReasonPhrase()));
+        String.format("%s %d %s\r\n", this.request.getVersion(), unAuthResponse.getCode(), unAuthResponse.getReasonPhrase()));
     responseBuilder.append("WWW-Authenticate: Basic realm=\"667 Server\"\r\n");
     String response = responseBuilder.toString();
     System.out.println(response);

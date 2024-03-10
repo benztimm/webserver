@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import startup.configuration.MimeTypes;
+import webserver667.requests.HttpMethods;
 import webserver667.requests.HttpRequest;
 import webserver667.responses.authentication.UserAuthenticator;
 import webserver667.responses.authentication.UserPasswordAuthenticator;
@@ -14,12 +15,14 @@ public class Resource implements IResource {
   private Path path;
   private MimeTypes mimeTypes;
   private String uri;
+  private HttpRequest request;
 
 
   public Resource(HttpRequest request, String documentRoot, MimeTypes mimeTypes) {    
     this.mimeTypes = mimeTypes;
     this.uri = request.getUri();
     this.path = Paths.get(documentRoot.toString(), this.uri.toString()).normalize();
+    this.request = request;
   }
 
   @Override
@@ -39,8 +42,7 @@ public class Resource implements IResource {
 
   @Override
   public boolean isScript() {
-    System.out.println("URI: " + this.uri);
-    return this.uri.contains("/scripts/");
+    return this.request.getHttpMethod()==HttpMethods.POST;
   }
 
   @Override

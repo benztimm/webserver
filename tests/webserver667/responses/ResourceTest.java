@@ -113,7 +113,7 @@ public class ResourceTest {
     Path documentRoot = createDocumentRoot(resourcePath);
 
     HttpRequest request = new HttpRequest();
-    request.setUri(Paths.get("doesnt", "scripts", "index.html").toString().replace("\\", "/"));
+    request.setUri(testRequest.getUri());
     request.setHttpMethod(HttpMethods.POST);
 
     IResource resource = new Resource(request, documentRoot.toString(), getMimeTypes());

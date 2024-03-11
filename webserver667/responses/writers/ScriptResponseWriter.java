@@ -40,10 +40,9 @@ public class ScriptResponseWriter extends ResponseWriter {
     List<String> command = new ArrayList<>();
     if (firstLine != null && firstLine.startsWith("#!")) {
       String interpreter;
-      if (firstLine.contains("node")) {
-        interpreter = "node";
-      } else {
-        interpreter = firstLine.substring(2).trim();
+      interpreter = firstLine.substring(2).trim();
+      if (interpreter.contains(" ")) {
+        interpreter = interpreter.split(" ")[0];
       }
       command.add(interpreter);
     } else {

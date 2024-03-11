@@ -16,6 +16,8 @@ The project also improved my problem-solving skills, as I navigated through chal
 
 In conclusion, this project has been a learning journey. It not only deepened my technical skills and understanding of web server development but also allow me to appreciate for the underlying technology that powers the web applications we often take for granted. I am eager to apply these insights in future projects and continue exploring the vast landscape of web development.
 
+#### Austin Kuykendall
+What I learned from this assignment was the value of using inheritance. The code will become less to write and share functionality between methods. By having classes pass down information, we can write more clean code.  The readability with having the parameters as methods makes following the logic a lot easier.  I think giving us the structure of the code is a great example of why drawing a  diagram is helpful.  In my previous courses at SFSU I think the “before code” steps are hinted at for this reason.
 
 ### Challenges I Encountered
 #### Ekarat buddharuksa
@@ -24,6 +26,11 @@ In the process of completing this assignment, I encountered several challenges, 
 Another challenge was the realization that the project template provided to us was not entirely complete or functional from the outset. It appeared that numerous adjustments were necessary to align the template with the test modules effectively. This led to a significant amount of trial and error as I worked to identify and implement the changes needed to make everything work as intended.
 
 To overcome these challenges, I was make a discussions on Discord. This was really helpful, providing insights and different perspectives that I hadn't considered. Additionally, I try to look into the test module. This gave me a glimpse of how each class should be implement and how is it work, provided me a clear idea how to implement each class and method. This hands-on problem-solving and adaptation process not only helped me complete the assignment but also improve my learning experience, teaching me the importance of flexibility and perseverance in the face of technical challenges.
+
+#### Austin Kuykendall
+I had trouble deciphering if I needed to add more methods or just work with what I was given.  Most of the times when I do not have sample outputs or desired results I stray from the answer.  It is also hard to work other classes and have work in between. If SF didn’t have high standards of living, I would work less to pay x amount of rent.
+
+For overcoming challenges, I believe that by using my community and resources available.  Most students will talk in discord about questions they have in certain areas.  So If I have the same question, I think I am heading in the right direction.  Participating in class as an open discussion makes me feel more comfortable asking questions.  I also would like to thank my classmates.  Who explain things to me that I didn’t understand originally.
 
 ### System Design (Extra Credit - 5 pts)
 

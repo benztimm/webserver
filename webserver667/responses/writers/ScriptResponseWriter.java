@@ -10,11 +10,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import webserver667.exceptions.responses.ServerErrorException;
+import webserver667.logging.Logger;
 import webserver667.requests.HttpRequest;
-
+import webserver667.responses.HttpResponseCode;
 import webserver667.responses.IResource;
 
 public class ScriptResponseWriter extends ResponseWriter {
@@ -63,24 +65,41 @@ public class ScriptResponseWriter extends ResponseWriter {
       ProcessBuilder processBuilder = new ProcessBuilder(command);
       Map<String, String> env = processBuilder.environment();
 
-      // Set environment variables
-      request.getHeaders().forEach((key, value) -> env.put("HTTP_" + key.toUpperCase().replace("-", "_"), value));
+      request.getHeaders().forEach((key, value) -> {
+        env.put("HTTP_" + key.toUpperCase().replace("-", "_"), value);
+      });
       env.put("SERVER_PROTOCOL", request.getVersion());
       if (request.getQueryString() != null) {
         env.put("QUERY_STRING", request.getQueryString());
       }
+
       Process process = processBuilder.start();
-      BufferedReader reader = new BufferedReader(
-          new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
-      String output = reader.lines().collect(Collectors.joining("\r\n"));
-      this.out.write("HTTP/1.1 200 OK\r\n".getBytes());
-      this.out.write(output.getBytes());
+      try {
+        byte[] outputBytes = process.getInputStream().readAllBytes();
+        String output = new String(outputBytes, StandardCharsets.UTF_8);
+        output = output.replace("\\r\\n", "\r\n");
+
+        HttpResponseCode okResponse = HttpResponseCode.OK;
+
+        StringBuilder responseBuilder = new StringBuilder();
+        responseBuilder.append(
+            String.format("%s %d %s\r\n", this.request.getVersion(), okResponse.getCode(),
+                okResponse.getReasonPhrase()));
+        responseBuilder.append(output);
+        this.out.write(responseBuilder.toString().getBytes());
+        System.out.println(Logger.getLogString("127.0.0.1", request, resource, okResponse.getCode(), responseBuilder.toString().length()));
+
+        this.out.flush();
+
+      } catch (Exception e) {
+        throw new ServerErrorException(e.getMessage());
+      }
 
     } catch (IOException e) {
       ResponseWriter responseWriter = new InternalServerErrorResponseWriter(out, resource, request);
       responseWriter.write();
       throw new ServerErrorException(e.getMessage());
     }
-  }
 
+  }
 }

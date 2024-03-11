@@ -8,9 +8,15 @@ import java.nio.charset.StandardCharsets;
 
 import startup.configuration.MimeTypes;
 import startup.configuration.ServerConfiguration;
+import webserver667.exceptions.responses.MethodNotAllowedException;
+import webserver667.logging.Logger;
 import webserver667.requests.HttpMethods;
 import webserver667.requests.HttpRequest;
 import webserver667.requests.RequestReader;
+import webserver667.responses.IResource;
+import webserver667.responses.Resource;
+import webserver667.responses.writers.ResponseWriter;
+import webserver667.responses.writers.ResponseWriterFactory;
 
 public class WebServer implements I667Server {
   private ServerSocket serverSocket = null;
@@ -28,14 +34,12 @@ public class WebServer implements I667Server {
         Thread requestThread = new Thread(() -> {
           try {
             RequestReader requestReader = new RequestReader(clientSocket.getInputStream());
-            HttpRequest method = requestReader.getRequest();
-            System.out.println(method.getHttpMethod());
-            System.out.println(method.getUri());
-            System.out.println(method.getVersion());
-            System.out.println(method.getHeader("Host"));
-            System.out.println(new String(method.getBody(), StandardCharsets.UTF_8));
 
-
+            HttpRequest request = requestReader.getRequest();
+            OutputStream out = clientSocket.getOutputStream();
+            Resource resource =new Resource(request, configuration.getDocumentRoot().toString(), mimeTypes);
+            ResponseWriter writer = ResponseWriterFactory.create(out, resource, request);
+            writer.write();
           } catch (Exception e) {
             e.printStackTrace();
           } finally {

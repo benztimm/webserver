@@ -101,7 +101,7 @@ public class ServerConfiguration {
   }
 
   private void setMimeFileContent(String shortVersion, String longVersion) throws InvalidServerConfigurationException {
-    if (this.specification.contains(mimeFlag) && shortVersion != null && longVersion != null) {
+    if (this.specification.contains(mimeFlag) && (shortVersion != null || longVersion != null)) {
       this.mimeFileContent = new MimeTypes(shortVersion != null ? shortVersion : longVersion);
     } else {
       try {

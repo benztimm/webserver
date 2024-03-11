@@ -2,6 +2,8 @@ package webserver667.responses.writers;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
+import webserver667.logging.Logger;
 import webserver667.requests.HttpRequest;
 import webserver667.responses.HttpResponseCode;
 import webserver667.responses.IResource;
@@ -27,6 +29,8 @@ public class MethodNotAllowedResponseWriter extends ResponseWriter {
     try {
       this.outStream.write(response.getBytes());
       this.outStream.flush();
+      System.out.println(Logger.getLogString("127.0.0.1", request, resource, methodNotAllowResponse.getCode(), 0));
+
     } catch (IOException e) {
       e.printStackTrace();
     }

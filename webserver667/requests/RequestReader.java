@@ -39,7 +39,7 @@ public class RequestReader {
     HttpRequest request = new HttpRequest();
 
     try {
-      String requestLine = readLine(input);
+      String requestLine = readLine(this.input);
       if (requestLine == null || requestLine.isEmpty()) {
         throw new BadRequestException("Request line is empty");
       }
@@ -52,7 +52,7 @@ public class RequestReader {
       try {
         request.setHttpMethod(HttpMethods.valueOf(requestParts[0]));
       } catch (IllegalArgumentException e) {
-        throw new MethodNotAllowedException("Unsupported HTTP method: " + requestParts[0]);
+        request.setHttpMethod(HttpMethods.NOTALLOW);
       }
       request.setUri(requestParts[1]);
       request.setVersion(requestParts[2]);

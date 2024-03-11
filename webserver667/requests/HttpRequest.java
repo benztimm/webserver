@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest {
-  private HttpMethods httpMethod;
+  private HttpMethods httpMethod = null;
   private String uri = "";
   private String queryString;
   private String version;

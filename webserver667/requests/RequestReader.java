@@ -18,14 +18,13 @@ public class RequestReader {
     StringBuilder line = new StringBuilder();
     int c;
     while ((c = input.read()) != -1) {
-      if (c == '\r') { // Check for carriage return
-        input.mark(1); // Mark the next character in the stream to return here if it's not a newline
+      if (c == '\r') { 
+        input.mark(1); 
         int nextChar = input.read();
         if (nextChar != '\n') {
-          input.reset(); // Reset if the next character is not newline, as it's part of the next data
+          input.reset(); 
         }
-        break; // Break the loop if we encounter carriage return, potentially followed by a
-               // newline
+        break; 
       } else {
         line.append((char) c);
       }

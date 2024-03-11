@@ -62,16 +62,15 @@ public class HttpRequest {
   }
 
   public int getContentLength() {
-    // Parse the Content-Length header to an integer if it exists
     String contentLength = getHeader("Content-Length");
     if (contentLength != null) {
       try {
         return Integer.parseInt(contentLength);
       } catch (NumberFormatException e) {
-        return 0; // Or handle this error condition appropriately.
+        return 0;
       }
     }
-    return 0; // Default to 0 if header is not present or not parsable
+    return 0;
   }
 
   public byte[] getBody() {

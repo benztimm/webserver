@@ -1,0 +1,39 @@
+diff --git a/tests/helpers/responses/CompareTestOutputAndExpectedOutput.java b/tests/helpers/responses/CompareTestOutputAndExpectedOutput.java
+index dbdb8f3..9a124ab 100644
+--- a/tests/helpers/responses/CompareTestOutputAndExpectedOutput.java
++++ b/tests/helpers/responses/CompareTestOutputAndExpectedOutput.java
+@@ -9,6 +9,7 @@ public class CompareTestOutputAndExpectedOutput {
+   private byte[] responseBody;
+ 
+   public CompareTestOutputAndExpectedOutput(TestOutputStream output) {
++    this.responseHead = output.toString().getBytes();
+     this.responseBody = output.getBody();
+   }
+ 
+diff --git a/tests/helpers/responses/TestOutputStream.java b/tests/helpers/responses/TestOutputStream.java
+index 139fdec..411c559 100644
+--- a/tests/helpers/responses/TestOutputStream.java
++++ b/tests/helpers/responses/TestOutputStream.java
+@@ -67,7 +67,7 @@ public class TestOutputStream extends OutputStream {
+     } else {
+       byte[] result = out.toByteArray();
+ 
+-      return Arrays.copyOfRange(result, bodyPointer, result.length - 1);
++      return Arrays.copyOfRange(result, bodyPointer, result.length);
+     }
+   }
+ }
+\ No newline at end of file
+diff --git a/webserver667/responses/authentication/PasswordFileReader.java b/webserver667/responses/authentication/PasswordFileReader.java
+index e1b2b15..6287f97 100644
+--- a/webserver667/responses/authentication/PasswordFileReader.java
++++ b/webserver667/responses/authentication/PasswordFileReader.java
+@@ -30,7 +30,7 @@ public class PasswordFileReader {
+     // Username and password from the client
+     String[] parts = credentials.split(":");
+     // SHA-1 encrypted password
+-    return users.get(parts[0]) == encryptClearPassword(parts[1]);
++    return users.get(parts[0]).equals(encryptClearPassword(parts[1]));
+   }
+ 
+   private String encryptClearPassword(String password) {

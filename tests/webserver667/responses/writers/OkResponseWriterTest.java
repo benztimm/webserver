@@ -10,6 +10,7 @@ import tests.helpers.responses.CompareTestOutputAndExpectedOutput;
 import tests.helpers.responses.TestOutputStream;
 import tests.helpers.responses.TestResource;
 import webserver667.exceptions.responses.ServerErrorException;
+import webserver667.requests.HttpMethods;
 import webserver667.requests.HttpRequest;
 import webserver667.responses.writers.OkResponseWriter;
 import webserver667.responses.writers.ResponseWriter;
@@ -24,7 +25,12 @@ public class OkResponseWriterTest {
         TestResource.createTempResourceFile("fileContent", "fileContent", fileContent));
     TestOutputStream out = new TestOutputStream();
 
-    ResponseWriter writer = new OkResponseWriter(out, testResource, new HttpRequest());
+    HttpRequest request = new HttpRequest();
+    request.setVersion("HTTP/1.1");
+    request.setUri("/fileContent");
+    request.setHttpMethod(HttpMethods.GET);
+
+    ResponseWriter writer = new OkResponseWriter(out, testResource, request);
     writer.write();
 
     CompareTestOutputAndExpectedOutput comparator = new CompareTestOutputAndExpectedOutput(out);

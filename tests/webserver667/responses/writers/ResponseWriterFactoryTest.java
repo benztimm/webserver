@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.jupiter.api.Test;
 
@@ -87,13 +88,15 @@ public class ResponseWriterFactoryTest {
 
   @Test
   public void testNotModified() throws IOException {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy hh:mm:ss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy hh:mm:ss z");
+    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
     File file = Files.createTempFile("dont", "care").toFile();
     try {
       Thread.sleep(1000);
     } catch (InterruptedException e) {
     }
-    String afterDate = dateFormat.format(new Date()) + " GMT";
+    String afterDate = dateFormat.format(new Date());
 
     HttpRequest request = new HttpRequest();
     request.setHttpMethod(HttpMethods.GET);

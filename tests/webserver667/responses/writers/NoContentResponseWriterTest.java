@@ -22,7 +22,10 @@ public class NoContentResponseWriterTest {
     IResource testResource = new TestResource();
     TestOutputStream out = new TestOutputStream();
 
-    ResponseWriter writer = new NoContentResponseWriter(out, testResource, new HttpRequest());
+    HttpRequest request = new HttpRequest();
+    request.setVersion("HTTP/1.1");
+
+    ResponseWriter writer = new NoContentResponseWriter(out, testResource, request);
     writer.write();
 
     CompareTestOutputAndExpectedOutput comparator = new CompareTestOutputAndExpectedOutput(out);

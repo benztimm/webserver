@@ -22,7 +22,10 @@ public class CreatedResponseWriterTest {
     IResource testResource = new TestResource();
     TestOutputStream out = new TestOutputStream();
 
-    ResponseWriter writer = new CreatedResponseWriter(out, testResource, new HttpRequest());
+    HttpRequest request = new HttpRequest();
+    request.setVersion("HTTP/1.1");
+
+    ResponseWriter writer = new CreatedResponseWriter(out, testResource, request);
     writer.write();
 
     CompareTestOutputAndExpectedOutput comparator = new CompareTestOutputAndExpectedOutput(out);

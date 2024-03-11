@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import tests.helpers.requests.TestInputStream;
 import webserver667.exceptions.responses.BadRequestException;
 import webserver667.exceptions.responses.MethodNotAllowedException;
+import webserver667.exceptions.responses.ServerErrorException;
 import webserver667.requests.HttpMethods;
 import webserver667.requests.HttpRequest;
 import webserver667.requests.RequestReader;
@@ -33,7 +34,7 @@ public class RequestReaderTest {
   @ParameterizedTest
   @MethodSource("tests.helpers.requests.TestProviders#provideValidHttpMethods")
   public void testValidHttpMethods(HttpMethods expectedMethod, InputStream input)
-      throws BadRequestException, MethodNotAllowedException {
+      throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     RequestReader reader = new RequestReader(input);
     HttpRequest request = reader.getRequest();
 
@@ -55,7 +56,7 @@ public class RequestReaderTest {
   @ParameterizedTest
   @MethodSource("tests.helpers.requests.TestProviders#provideURIs")
   public void testRequestReaderReadsURI(String expectedUri, InputStream input)
-      throws BadRequestException, MethodNotAllowedException {
+      throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     RequestReader reader = new RequestReader(input);
     HttpRequest request = reader.getRequest();
 
@@ -65,7 +66,7 @@ public class RequestReaderTest {
   @ParameterizedTest
   @MethodSource("tests.helpers.requests.TestProviders#provideURIsWithQueryStrings")
   public void testRequestReaderReadsQueryStringsFromURIs(String expectedQueryString, InputStream input)
-      throws BadRequestException, MethodNotAllowedException {
+      throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     RequestReader reader = new RequestReader(input);
     HttpRequest request = reader.getRequest();
 
@@ -73,7 +74,8 @@ public class RequestReaderTest {
   }
 
   @Test
-  public void testRequestReaderReadsHttpVersion() throws BadRequestException, MethodNotAllowedException {
+  public void testRequestReaderReadsHttpVersion()
+      throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     RequestReader reader = new RequestReader(new TestInputStream("GET /index.html HTTP/1.1\r\n\r\n".getBytes()));
     HttpRequest request = reader.getRequest();
 
@@ -83,7 +85,7 @@ public class RequestReaderTest {
   @ParameterizedTest
   @MethodSource("tests.helpers.requests.TestProviders#getHeaders")
   public void testRequestReaderReadsHeaders(String expectedHeaderName, String expectedHeaderValue, InputStream input)
-      throws BadRequestException, MethodNotAllowedException {
+      throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     RequestReader reader = new RequestReader(input);
     HttpRequest request = reader.getRequest();
 
@@ -91,7 +93,7 @@ public class RequestReaderTest {
   }
 
   @Test
-  public void testRequestReaderReadsBody() throws BadRequestException, MethodNotAllowedException {
+  public void testRequestReaderReadsBody() throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     byte[] expectedBody = new byte[] { 42, 3, 5, 10, 22, 38 };
     byte[] initialRequestContent = "GET / HTTP/1.1\r\nContent-Length: 6\r\n\r\n".getBytes();
 
@@ -118,7 +120,8 @@ public class RequestReaderTest {
   }
 
   @Test
-  public void testRequestReaderSetsNullForEmptyBody() throws BadRequestException, MethodNotAllowedException {
+  public void testRequestReaderSetsNullForEmptyBody()
+      throws BadRequestException, MethodNotAllowedException, ServerErrorException {
     RequestReader reader = new RequestReader(new TestInputStream("GET /index.html HTTP/1.1\r\n\r\n".getBytes()));
     HttpRequest request = reader.getRequest();
 

@@ -4,16 +4,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 import startup.configuration.MimeTypes;
 import startup.configuration.ServerConfiguration;
-import webserver667.exceptions.responses.MethodNotAllowedException;
-import webserver667.logging.Logger;
-import webserver667.requests.HttpMethods;
+
 import webserver667.requests.HttpRequest;
 import webserver667.requests.RequestReader;
-import webserver667.responses.IResource;
 import webserver667.responses.Resource;
 import webserver667.responses.writers.ResponseWriter;
 import webserver667.responses.writers.ResponseWriterFactory;

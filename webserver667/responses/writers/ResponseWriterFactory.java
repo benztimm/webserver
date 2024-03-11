@@ -2,7 +2,6 @@ package webserver667.responses.writers;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -11,9 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import webserver667.exceptions.responses.ServerErrorException;
 import webserver667.requests.HttpRequest;
-import webserver667.responses.HttpResponseCode;
 import webserver667.responses.IResource;
 import webserver667.responses.authentication.UserAuthenticator;
 

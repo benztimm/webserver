@@ -1,10 +1,8 @@
 package webserver667.requests;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import webserver667.exceptions.responses.BadRequestException;
 import webserver667.exceptions.responses.MethodNotAllowedException;

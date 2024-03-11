@@ -27,10 +27,8 @@ public class PasswordFileReader {
         Base64.getDecoder().decode(base64EncodedString),
         Charset.forName("UTF-8"));
 
-    // Username and password from the client
     String[] parts = credentials.split(":");
     if(parts.length != 2) return false;
-    // SHA-1 encrypted password
     return users.get(parts[0]).equals(encryptClearPassword(parts[1]));
   }
 

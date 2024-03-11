@@ -37,10 +37,8 @@ public class OkResponseWriter extends ResponseWriter {
         
         responseBuilder.append("\r\n");
 
-        // Convert StringBuilder to bytes and write headers to the output stream
         this.outStream.write(responseBuilder.toString().getBytes());
 
-        // Conditionally write the body only for GET requests
         if (!this.request.getHttpMethod().equals(HttpMethods.HEAD)) {
             this.outStream.write(this.resource.getFileBytes());
             System.out.println(Logger.getLogString("127.0.0.1", request, resource, okResponse.getCode(), this.resource.getFileBytes().length));

@@ -16,16 +16,20 @@ import webserver667.responses.writers.ResponseWriterFactory;
 
 public class WebServer implements I667Server {
   private ServerSocket serverSocket = null;
+  private volatile boolean isRunning = false;
+
 
   @Override
   public void close() throws Exception {
+    stop();
   }
 
   @Override
   public void start(ServerConfiguration configuration, MimeTypes mimeTypes) {
+    isRunning = true;
     try {
       serverSocket = new ServerSocket(configuration.getPort());
-      while (true) {
+      while (isRunning) {
         Socket clientSocket = serverSocket.accept();
         Thread requestThread = new Thread(() -> {
           try {
@@ -58,5 +62,13 @@ public class WebServer implements I667Server {
 
   @Override
   public void stop() {
+    isRunning = false; 
+    try {
+      if (serverSocket != null && !serverSocket.isClosed()) {
+        serverSocket.close(); 
+      }
+    } catch (IOException e) {
+      e.printStackTrace(); 
+    }
   }
 }

@@ -14,7 +14,7 @@ public class RequestReader {
     this.input = input;
   }
 
-  private String readLine(InputStream input) throws IOException {
+  public String readLine(InputStream input) throws IOException {
     StringBuilder line = new StringBuilder();
     int c;
     while ((c = input.read()) != -1) {
@@ -46,12 +46,12 @@ public class RequestReader {
       if (requestParts.length < 3) {
         throw new BadRequestException("Invalid request line format");
       }
-
       try {
         request.setHttpMethod(HttpMethods.valueOf(requestParts[0]));
       } catch (IllegalArgumentException e) {
-        request.setHttpMethod(HttpMethods.NOTALLOW);
+        throw new MethodNotAllowedException("Method " + requestParts[0] + " not allowed");
       }
+
       request.setUri(requestParts[1]);
       request.setVersion(requestParts[2]);
 
@@ -68,7 +68,7 @@ public class RequestReader {
         while (totalBytesRead < contentLength) {
           bytesRead = input.read(body, totalBytesRead, contentLength - totalBytesRead);
           if (bytesRead == -1) {
-            break; // End of stream reached
+            break;
           }
           totalBytesRead += bytesRead;
         }
